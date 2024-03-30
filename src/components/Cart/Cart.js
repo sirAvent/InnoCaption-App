@@ -28,14 +28,18 @@ export function Cart({ cart, setCart, cartStatus, setCartStatus}){
         ?
           <div className="flex">
             <BsCart size={25} />
-            <span
-              className="
-              text-xs absolute bg-red-500 min-w-[15px] px-[1px] rounded
-              transform translate-x-[22px] translate-y-[22px]
-              "
-            >
+            {
+              cart.length !== 0
+              &&
+              <span
+                className="
+                text-xs absolute bg-red-500 min-w-[15px] px-[1px] rounded
+                transform translate-x-[22px] translate-y-[22px]
+                "
+              >
                 {itemsInCart}
               </span>
+            }
           </div>
           
         :
@@ -45,6 +49,7 @@ export function Cart({ cart, setCart, cartStatus, setCartStatus}){
 
       <CartMenu
         cart={cart}
+        setCart={setCart}
         cartStatus={cartStatus}
         setCartStatus={setCartStatus}
       />

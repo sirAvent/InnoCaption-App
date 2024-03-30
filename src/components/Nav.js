@@ -34,8 +34,9 @@ export default function Nav({
     <nav className="fixed w-[100%] z-50">
       <div
         className="
-          flex flex-row justify-between gap-x-5 bg-blue-800 text-white p-5
-          lg:px-32
+          flex flex-row justify-between gap-x-5 bg-blue-800 text-white p-5 px-7
+          lg:pl-32
+          lg:pr-[calc(8rem+30px)]
           md:px-16
         "
       >
