@@ -14,8 +14,8 @@ export default function StoreView({
   handleInputPageChange
 }){
   return (
-    <div className='p-5 sm:p-0'>
-      <div className='flex flex-col sm:flex-row justify-between lg:pr-32 sm:mb-5 sm:gap-y-auto gap-y-3 gap-x-20 items-center'>
+    <div className='p-5 md:p-0'>
+      <div className='flex flex-col md:flex-row justify-between lg:pr-32 md:mb-5 md:gap-y-auto gap-y-3 gap-x-20 items-center'>
         <span>
           {category !== '' && <>Results for {category}</>}
         </span>
@@ -23,7 +23,7 @@ export default function StoreView({
         { // Removed pagination when searched by category because the category search API does not support parameters: skip, limit 
           (category === '')
           &&
-          <div className='flex flex-row gap-x-3 items-center sm:mb-0 mb-5'>
+          <div className='flex flex-row gap-x-3 items-center md:mb-0 mb-5'>
           <BsCaretLeftFill className='hover:cursor-pointer' onClick={handlePreviousPage} />
           <form onSubmit={handlePageSubmit}>
             <input
@@ -46,7 +46,7 @@ export default function StoreView({
         
         
       </div>
-      <div className='flex flex-row gap-y-20 sm:gap-10 flex-wrap justify-center sm:justify-even lg:pr-32'>
+      <div className='flex flex-row gap-y-20 gap-x-10 flex-wrap justify-center md:justify-between lg:pr-32'>
         {isProductLoaded && products.map((product, index) => (
           <Product
             key = {index}

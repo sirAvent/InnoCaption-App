@@ -26,9 +26,9 @@ const RatingStars = ({ rating }) => {
 
 function Product({ id, title, rating, price, images }) {
   return (
-    <div key={id} className="flex flex-col item max-w-[300px] max-h[500px] sm:w-[215px] sm:h-[380px] shrink border-b-2 border-blue-600 shadow-md overflow-hidden">
+    <div key={id} className="flex flex-col item max-w-[300px] max-h[500px] md:w-[215px] md:h-[380px] shrink border-b-2 border-blue-600 shadow-md overflow-hidden">
       <img
-        className='relative max-w-[300px] sm:max-w-[215px] sm:h-[250px] object-scale-down bg-gray-100 transform transition duration-300 hover:cursor-pointer'
+        className='relative max-w-[300px] md:max-w-[215px] md:h-[250px] object-scale-down bg-gray-100 transform transition duration-300 hover:cursor-pointer'
         src={images[0]}
         alt={title}
       />

@@ -5,11 +5,11 @@ function CategoryForm({ categories, category, handleCategoryChange, handleCatego
     setCategory('');
   }
   return (
-    <form onSubmit={handleCategorySubmit} className='pt-5 pl-5 sm:p-5 sm:pt-2 border-solid sm:border-2 border-gray-200 rounded-md h-fit'>
+    <form onSubmit={handleCategorySubmit} className='pt-5 pl-5 md:p-5 md:pt-2 border-solid md:border-2 border-gray-200 rounded-md h-fit'>
       <h1 className='text-blue-900 font-semibold'>Search by Category</h1>
-      <span className='flex flex-row sm:flex-col overflow-scroll sm:overflow-x-hidden max-h-[350px] sm:text-sm'>
+      <span className='flex flex-row md:flex-col overflow-scroll md:overflow-x-hidden max-h-[350px] md:text-sm'>
         {categories.map((cat, index) => (
-          <div key={index} className="mb-1 flex flex-row gap-x-1 sm:pr-10 inline-flex" style={{minInlineSize:"max-content"}}>
+          <div key={index} className="mb-1 flex flex-row gap-x-1 md:pr-10 inline-flex" style={{minInlineSize:"max-content"}}>
             <input
               className='hover:cursor-pointer '
               type="radio"
@@ -20,7 +20,7 @@ function CategoryForm({ categories, category, handleCategoryChange, handleCatego
               checked={category === cat}
             />
             <label
-              className='hover:cursor-pointer mr-5 mb-5 mt-3 sm:mr-0 sm:my-0'
+              className='hover:cursor-pointer mr-5 mb-5 mt-3 md:mr-0 md:my-0'
               htmlFor={`category-${index}`}
             >
               {cat}
@@ -29,7 +29,7 @@ function CategoryForm({ categories, category, handleCategoryChange, handleCatego
         ))}
       </span>
      
-      <div className='flex flex-row mt-2 sm:mt-5'>
+      <div className='flex flex-row mt-2 md:mt-5'>
         <span
           className='
           hover:cursor-pointer 

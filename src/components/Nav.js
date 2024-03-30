@@ -23,13 +23,13 @@ export default function Nav() {
         className="
           flex flex-row justify-between gap-x-5 bg-blue-800 text-white p-5
           lg:px-32
-          sm:px-16
+          md:px-16
         "
       >
         <h1 className="self-center text-xl font-medium">InnoCaption</h1>
 
         <form
-          className="text-black bg-white p-3 hidden sm:flex w-[50%]"
+          className="text-black bg-white p-3 hidden md:flex w-[50%]"
           onSubmit={handleSearchSubmit}
         >
           <input
@@ -52,7 +52,7 @@ export default function Nav() {
       </nav>
 
       <form
-        className="flex flex-row bg-gray-100 sm:hidden px-4"
+        className="flex flex-row bg-gray-100 md:hidden px-4"
         onSubmit={handleSearchSubmit}
       >
         <button className="self-center px-3">
