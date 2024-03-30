@@ -5,6 +5,8 @@ export default function StoreView({
   category,
   products,
   isProductLoaded,
+  cart,
+  setCart,
   page,
   inputPage,
   maxPage,
@@ -60,6 +62,8 @@ export default function StoreView({
             price={product.price}
             rating={product.rating}
             images={product.images}
+            cart={cart}
+            setCart={setCart}
           />
         ))}
       </div>

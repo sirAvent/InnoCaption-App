@@ -1,4 +1,4 @@
-import { BsStar, BsStarFill, BsStarHalf, BsCartPlusFill  } from "react-icons/bs";
+import { BsStar, BsStarFill, BsStarHalf, BsCartPlusFill, BsCartCheckFill  } from "react-icons/bs";
 
 const RatingStars = ({ rating }) => {
   const fullStars = Math.floor(rating);
@@ -24,7 +24,31 @@ const RatingStars = ({ rating }) => {
   );
 };
 
-function Product({ id, title, rating, price, images }) {
+function Product({ id, title, rating, price, images, cart, setCart}) {
+
+  const addToCart = (id, title, price, thumbnail) => {
+    const cartCopy = [...cart];
+    cartCopy.push({
+        discountedPercentage: 0,
+        discountedPrice: price,
+        id:id,
+        price:price,
+        quantity: 1,
+        thumbnail: thumbnail,
+        title:title,
+        total:price
+    })
+    setCart(cartCopy)
+
+  }
+
+  const removeFromCart = (id) => {
+  }
+
+  const inCart = (id) => {
+    const foundIndex = cart.findIndex(item => item.id === id)
+    return (foundIndex !== -1)
+  }
   return (
     <div key={id} className="flex flex-col item max-w-[300px] max-h[500px] md:w-[215px] md:h-[380px] shrink border-b-2 border-blue-600 shadow-md overflow-hidden">
       <img
@@ -39,7 +63,23 @@ function Product({ id, title, rating, price, images }) {
         </div>
         <span className='flex flex-row items-center justify-between mt-3'>
           ${price}
-          <BsCartPlusFill size={25} style={{transform:"translateX(-5px) translateY(-10px)"}} className="hover:cursor-pointer" />
+          {
+            inCart(id)
+            ?
+            <BsCartCheckFill 
+              size={25}
+              style={{transform:"translateX(-5px) translateY(-10px)"}}
+              className="hover:cursor-pointer text-green-600"
+            />
+            :
+            <BsCartPlusFill
+              size={25}
+              style={{transform:"translateX(-5px) translateY(-10px)"}}
+              className="hover:cursor-pointer"
+              onClick={() => addToCart(id, title, price, images[0])}
+            />
+          }
+          
         </span>
       </div>
       

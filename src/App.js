@@ -31,7 +31,7 @@ function App() {
         }
         const data = await response.json();
         setCart(data.products);
-        console.log(data.products);
+        console.log('Initial ',data.products);
       } catch (error) {
         console.error('Error fetching cart:', error);
       }
@@ -150,12 +150,14 @@ function App() {
         category={category}
         products={products}
         isProductLoaded={isProductLoaded}
+        cart={cart}
         page={page}
         inputPage={inputPage}
         maxPage={maxPage}
         limit={limit}
         searchQuery={searchQuery}
         setCategory={setCategory}
+        setCart={setCart}
         handleCategoryChange={handleCategoryChange}
         handleCategorySubmit={handleCategorySubmit}
         handlePreviousPage={handlePreviousPage}

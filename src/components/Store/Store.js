@@ -8,12 +8,14 @@ export default function Store({
   category,
   products,
   isProductLoaded,
+  cart,
   page,
   inputPage,
   maxPage,
   limit,
   searchQuery,
   setCategory,
+  setCart,
   handleCategoryChange,
   handleCategorySubmit,
   handlePreviousPage,
@@ -36,6 +38,8 @@ export default function Store({
         category={category}
         products={products}
         isProductLoaded={isProductLoaded}
+        cart={cart}
+        setCart={setCart}
         page={page}
         inputPage={inputPage}
         maxPage={maxPage}

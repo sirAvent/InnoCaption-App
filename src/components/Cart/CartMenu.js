@@ -6,7 +6,7 @@ export function CartMenu({ cart, setCart, cartStatus, setCartStatus }){
 
   useEffect(() => {
     const cost = cart.reduce((accumulator, currentItem) => {
-      return accumulator + (currentItem.quantity * currentItem.price);
+      return accumulator + currentItem.total;
     }, 0);
     setTotalCost(cost);
   }, [cart]);
@@ -24,6 +24,7 @@ export function CartMenu({ cart, setCart, cartStatus, setCartStatus }){
         setCart(updatedCart);
       } else {
         cartCopy[foundIndex].quantity--;
+        cartCopy[foundIndex].total -= cartCopy[foundIndex].price;
         setCart(cartCopy)
       }
     }
@@ -37,6 +38,7 @@ export function CartMenu({ cart, setCart, cartStatus, setCartStatus }){
       // Create a copy of cart and set it to trigger component update
       const cartCopy = [...cart];
       cartCopy[foundIndex].quantity++;
+      cartCopy[foundIndex].total += cartCopy[foundIndex].price;
       setCart(cartCopy)
     }
     console.log(cart)
@@ -60,13 +62,13 @@ export function CartMenu({ cart, setCart, cartStatus, setCartStatus }){
         md:mt-[88px] md:w-[45vw] md:max-w-[calc(500px+30px)]
         mt-[68px] w-[100vw]
         z-20 transform translate-x-[100%]
-        duration-300 grid
+        duration-300 grid overflow-auto
         ${cartStatus && 'transform translate-x-0'}
         
       `}>
         
 
-        <div className={`self-start inline-grid p-10 gap-5 w-[100%] ${cart.length >= 6 && 'overflow-y-scroll'}`}>
+        <div className={`self-start inline-grid p-10 gap-5 w-[100%]`}>
           {cart.map((product, index) => (
             <CartItem
               key={index}
