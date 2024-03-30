@@ -28,14 +28,19 @@ export function CartMenu({ cart, setCart, cartStatus, setCartStatus }){
           // update cart to server wasn't successful
         }
       } else {
-        cartCopy[foundIndex].quantity--;
-        cartCopy[foundIndex].total -= cartCopy[foundIndex].price;
-        let response = updateCart({userid:1, cart:cartCopy});
-        if (response) {
-          setCart(cartCopy);
-        } else {
-          // update cart to server wasn't successful
-        }
+        // Item is in cart
+        updateCart({userid:1, cart:cartCopy}).then(
+          response => {
+            if (response) {
+              cartCopy[foundIndex].quantity--;
+              cartCopy[foundIndex].total -= cartCopy[foundIndex].price;
+              setCart(cartCopy);
+            } else {
+              // update cart to server wasn't successful
+            }
+          }
+        );
+        
       }
     }
     console.log(cart)
@@ -49,12 +54,16 @@ export function CartMenu({ cart, setCart, cartStatus, setCartStatus }){
       const cartCopy = [...cart];
       cartCopy[foundIndex].quantity++;
       cartCopy[foundIndex].total += cartCopy[foundIndex].price;
-      let response = updateCart({userid:1, cart:cart});
-      if (response) {
-        setCart(cartCopy)
-      } else {
-        // update cart to server wasn't successful
-      }
+      updateCart({userid:1, cart:cartCopy}).then(
+        response => {
+          if (response) {
+            setCart(cartCopy)
+          } else {
+            // update cart to server wasn't successful
+          }
+          
+        }
+      )
       
     }
     console.log(cart)

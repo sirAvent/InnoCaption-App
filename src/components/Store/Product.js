@@ -39,12 +39,17 @@ function Product({ id, title, rating, price, images, cart, setCart}) {
         title:title,
         total:price
     })
-    let response = updateCart({userid:1, cart:cartCopy});
-    if (response) {
-      setCart(cartCopy);
-    } else {
-      // update cart to server wasn't successful
-    }
+    
+    updateCart({userid:1, cart:cartCopy}).then(
+      response => {
+        if (response) {
+          setCart(cartCopy);
+        } else {
+          // update cart to server wasn't successful
+        }
+      }
+    );
+    
 
   }
 
