@@ -1,13 +1,16 @@
 import { BsSearch, BsCart } from "react-icons/bs";
 import { useState, useEffect } from "react";
 
-export default function Nav() {
-  const [searchQuery, setSearchQuery] = useState("");
+export default function Nav({ setSearchQuery, category, setCategory, handleCategoryChange }) {
+  const [queryInput, setQueryInput] = useState("")
   const [cartStatus, setCartStatus] = useState(false); 
 
   const handleSearchSubmit = (event) => {
     event.preventDefault();
-    console.log("Search submitted:", searchQuery);
+    setSearchQuery(queryInput);
+    setCategory('');
+    handleCategoryChange({ target: { value: '' } });
+    console.log("Search submitted:", queryInput);
   };
 
   const handleCartClick = () => {
@@ -17,6 +20,13 @@ export default function Nav() {
   useEffect(() => {
     console.log("Cart Status:", cartStatus);
   }, [cartStatus]);
+
+
+  useEffect(()=> {
+    if (category !== "") {
+      setQueryInput("");
+    }
+  }, [category]);
   return (
     <>
       <nav
@@ -36,8 +46,8 @@ export default function Nav() {
             className="outline-0 w-[100%]"
             type="text"
             placeholder="What can we help you find?"
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
+            value={queryInput}
+            onChange={(e) => setQueryInput(e.target.value)}
           />
           <button>
             <BsSearch size={20} color="darkgray"/>
@@ -62,8 +72,8 @@ export default function Nav() {
           className="py-4 bg-transparent w-[100%] outline-0"
           type="text"
           placeholder="What can we help you find?"
-          value={searchQuery}
-          onChange={(e) => setSearchQuery(e.target.value)}
+          value={queryInput}
+          onChange={(e) => setQueryInput(e.target.value)}
         />
       </form>
     </>

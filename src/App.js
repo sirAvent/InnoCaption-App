@@ -11,6 +11,9 @@ function App() {
   const [products, setProducts] = useState([]);
   const [isProductLoaded, setProductLoad] = useState(false);
 
+  const [searchQuery, setSearchQuery] = useState("");
+
+
   const [page, setPage] = useState(1);
   const [inputPage, setInputPage] = useState(1);
 
@@ -38,14 +41,18 @@ function App() {
 
   useEffect(() => {
     fetchProducts();
-  }, [page, category]);
+  }, [page, category, searchQuery]);
   
 
   const fetchProducts = async () => {
     try {
-      let url = `https://dummyjson.com/products?limit=${limit}&skip=${(page-1) * limit}`;
-      if (category != '') {
+      let url = "";
+      if (category !== '') {
         url = `https://dummyjson.com/products/category/${category}`;
+      } else if (searchQuery !== '') {
+        url = `https://dummyjson.com/products/search?q=${searchQuery}&limit=${limit}&skip=${(page-1) * limit}`;
+      } else {
+        url = `https://dummyjson.com/products?limit=${limit}&skip=${(page-1) * limit}`;
       }
       console.log(url);
       const response = await fetch(url);
@@ -54,7 +61,9 @@ function App() {
       }
       const data = await response.json();
       setProducts(data.products);
-      if (maxPage === 0 || maxPage - ((page-1) * limit) > limit) {
+      if (data.total <= limit || data.total === 0) {
+        setMaxPage(0);
+      } else if (maxPage === 0 || maxPage - ((page-1) * limit) > limit) {
         setMaxPage(Math.ceil(data.total/data.limit))
       }
       setProductLoad(true);
@@ -71,6 +80,7 @@ function App() {
   const handleCategorySubmit = (event) => {
     event.preventDefault();
     setCategory(selectedCategory);
+    setSearchQuery("");
   };
 
   const handlePreviousPage = () => {
@@ -106,7 +116,13 @@ function App() {
 
   return (
     <>
-      <Nav />
+      <Nav
+        setSearchQuery={setSearchQuery}
+        category={category}
+        setCategory={setCategory}
+        handleCategoryChange={handleCategoryChange}
+      />
+
       <Store
         categories={categories}
         selectedCategory={selectedCategory}
@@ -117,6 +133,7 @@ function App() {
         inputPage={inputPage}
         maxPage={maxPage}
         limit={limit}
+        searchQuery={searchQuery}
         setCategory={setCategory}
         handleCategoryChange={handleCategoryChange}
         handleCategorySubmit={handleCategorySubmit}

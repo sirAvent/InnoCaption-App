@@ -12,6 +12,7 @@ export default function Store({
   inputPage,
   maxPage,
   limit,
+  searchQuery,
   setCategory,
   handleCategoryChange,
   handleCategorySubmit,
@@ -38,6 +39,7 @@ export default function Store({
         page={page}
         inputPage={inputPage}
         maxPage={maxPage}
+        searchQuery={searchQuery}
         handlePreviousPage={handlePreviousPage}
         handleNextPage={handleNextPage}
         handlePageSubmit={handlePageSubmit}

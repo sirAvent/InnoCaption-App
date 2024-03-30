@@ -1,8 +1,15 @@
 import React from 'react';
 
-function CategoryForm({ categories, category, handleCategoryChange, handleCategorySubmit, setCategory }) {
+function CategoryForm({
+  categories,
+  category,
+  handleCategoryChange,
+  handleCategorySubmit,
+  setCategory
+}) {
   const handleResetCategory = () => {
     setCategory('');
+    handleCategoryChange({ target: { value: '' } });
   }
   return (
     <form onSubmit={handleCategorySubmit} className='pt-5 pl-5 md:p-5 md:pt-2 border-solid md:border-2 border-gray-200 rounded-md h-fit'>
@@ -23,7 +30,7 @@ function CategoryForm({ categories, category, handleCategoryChange, handleCatego
               className='hover:cursor-pointer mr-5 mb-5 mt-3 md:mr-0 md:my-0'
               htmlFor={`category-${index}`}
             >
-              {cat}
+              {cat.replace(/-/g, ' ')}
             </label>
           </div>
         ))}
@@ -31,13 +38,12 @@ function CategoryForm({ categories, category, handleCategoryChange, handleCatego
      
       <div className='flex flex-row mt-2 md:mt-5'>
         <span
-          className='
-          hover:cursor-pointer 
+          className={`
+          ${category === '' ? 'bg-gray-200 text-gray-400 cursor-not-allowed' : 'bg-gray-300 text-gray-700 hover:cursor-pointer'}
           p-1 px-2
-          border-gray-700 rounded text-gray-700 
+          border-gray-700 rounded 
           font-semibold border-r-0 rounded-tr-none rounded-br-none
-          bg-gray-300
-          '
+          `}
           onClick={handleResetCategory}
         >
           Reset
