@@ -1,12 +1,130 @@
+import React, { useState, useEffect } from 'react';
 import './App.css';
 import Nav from "./components/Nav";
 import Store from "./components/Store/Store";
 
 function App() {
+  const [categories, setCategories] = useState([]);
+  const [selectedCategory, setSelectedCategory] = useState('');
+  const [category, setCategory] = useState('');
+
+  const [products, setProducts] = useState([]);
+  const [isProductLoaded, setProductLoad] = useState(false);
+
+  const [page, setPage] = useState(1);
+  const [inputPage, setInputPage] = useState(1);
+
+  const [maxPage, setMaxPage] = useState(0);
+
+  const limit = 15;
+
+
+  useEffect(() => {
+    const fetchCategories = async () => {
+      try {
+        const response = await fetch('https://dummyjson.com/products/categories');
+        if (!response.ok) {
+          throw new Error('Failed to fetch categories');
+        }
+        const data = await response.json();
+        setCategories(data);
+      } catch (error) {
+        console.error('Error fetching categories:', error);
+      }
+    };
+    fetchCategories();
+  }, []);
+
+
+  useEffect(() => {
+    fetchProducts();
+  }, [page, category]);
+  
+
+  const fetchProducts = async () => {
+    try {
+      let url = `https://dummyjson.com/products?limit=${limit}&skip=${(page-1) * limit}`;
+      if (category != '') {
+        url = `https://dummyjson.com/products/category/${category}`;
+      }
+      console.log(url);
+      const response = await fetch(url);
+      if (!response.ok) {
+        throw new Error('Failed to fetch items');
+      }
+      const data = await response.json();
+      setProducts(data.products);
+      if (maxPage === 0 || maxPage - ((page-1) * limit) > limit) {
+        setMaxPage(Math.ceil(data.total/data.limit))
+      }
+      setProductLoad(true);
+
+    } catch (error) {
+      console.error('Error fetching items:', error);
+    }
+  };
+
+  const handleCategoryChange = (event) => {
+    setSelectedCategory(event.target.value);
+  };
+
+  const handleCategorySubmit = (event) => {
+    event.preventDefault();
+    setCategory(selectedCategory);
+  };
+
+  const handlePreviousPage = () => {
+    console.log("Previous Page");
+    let updatedValue = page - 1;
+    if (page > 1) {
+      setCategory('');
+      setPage(updatedValue);
+      setInputPage(updatedValue);
+    }
+  };
+
+  const handleNextPage = () => {
+    console.log("Next Page");
+    let updatedValue = page + 1;
+    if (page < maxPage) {
+      setCategory('');
+      setPage(updatedValue);
+      setInputPage(updatedValue);
+    }
+  };
+
+  const handleInputPageChange = (event) => {
+    setInputPage(event.target.value);
+  };
+
+  const handlePageSubmit = (event) => {
+    event.preventDefault();
+    if (inputPage >= 1 && inputPage <= maxPage) {
+      setPage(parseInt(inputPage));
+    }
+  };
+
   return (
     <>
       <Nav />
-      <Store />
+      <Store
+        categories={categories}
+        selectedCategory={selectedCategory}
+        category={category}
+        products={products}
+        isProductLoaded={isProductLoaded}
+        page={page}
+        inputPage={inputPage}
+        maxPage={maxPage}
+        limit={limit}
+        setCategory={setCategory}
+        handleCategoryChange={handleCategoryChange}
+        handleCategorySubmit={handleCategorySubmit}
+        handlePreviousPage={handlePreviousPage}
+        handleNextPage={handleNextPage}
+        handleInputPageChange={handleInputPageChange}
+        handlePageSubmit={handlePageSubmit}
+      />
     </>
   );
 }
