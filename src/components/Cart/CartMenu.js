@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { CartItem } from "./CartItem"
+import { updateCart } from "../../services/updateCart";
 
 export function CartMenu({ cart, setCart, cartStatus, setCartStatus }){
   const [totalCost, setTotalCost] = useState(0);
@@ -20,12 +21,21 @@ export function CartMenu({ cart, setCart, cartStatus, setCartStatus }){
       if (cartCopy[foundIndex].quantity <= 1) {
         // Remove the product from cart if quantity is 1
         const updatedCart = cartCopy.filter(item => item.id !== id);
-        console.log('updated', updatedCart)
-        setCart(updatedCart);
+        let response = updateCart({userid:1, cart:updatedCart});
+        if (response) {
+          setCart(updatedCart);
+        } else {
+          // update cart to server wasn't successful
+        }
       } else {
         cartCopy[foundIndex].quantity--;
         cartCopy[foundIndex].total -= cartCopy[foundIndex].price;
-        setCart(cartCopy)
+        let response = updateCart({userid:1, cart:cartCopy});
+        if (response) {
+          setCart(cartCopy);
+        } else {
+          // update cart to server wasn't successful
+        }
       }
     }
     console.log(cart)
@@ -39,7 +49,13 @@ export function CartMenu({ cart, setCart, cartStatus, setCartStatus }){
       const cartCopy = [...cart];
       cartCopy[foundIndex].quantity++;
       cartCopy[foundIndex].total += cartCopy[foundIndex].price;
-      setCart(cartCopy)
+      let response = updateCart({userid:1, cart:cart});
+      if (response) {
+        setCart(cartCopy)
+      } else {
+        // update cart to server wasn't successful
+      }
+      
     }
     console.log(cart)
   }

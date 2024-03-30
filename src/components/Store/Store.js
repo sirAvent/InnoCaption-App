@@ -12,7 +12,6 @@ export default function Store({
   page,
   inputPage,
   maxPage,
-  limit,
   searchQuery,
   setCategory,
   setCart,

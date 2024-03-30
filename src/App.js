@@ -154,7 +154,6 @@ function App() {
         page={page}
         inputPage={inputPage}
         maxPage={maxPage}
-        limit={limit}
         searchQuery={searchQuery}
         setCategory={setCategory}
         setCart={setCart}

@@ -4,11 +4,14 @@ export function CartItem( {thumbnail, id, title, price, quantity, add, remove} )
   
   return (
     <div className="rounded bg-white h-[130px] w-[100%] flex flex-row p-3 py-4 pr-0 gap-3 justify-evenly">
-      <img
-      className="max-w-[100px] max-h-[100px] self-center"
-      alt={title}
-      src={thumbnail}
-      />
+      <div className="w-[100px]">
+        <img
+          className="max-w-[100px] max-h-[100px] self-center"
+          alt={title}
+          src={thumbnail}
+        />
+      </div>
+      
 
       <div className="grid text-black w-[40%] font-semibold">
         <div className="self-end">

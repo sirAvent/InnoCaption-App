@@ -1,4 +1,5 @@
 import { BsStar, BsStarFill, BsStarHalf, BsCartPlusFill, BsCartCheckFill  } from "react-icons/bs";
+import { updateCart } from "../../services/updateCart";
 
 const RatingStars = ({ rating }) => {
   const fullStars = Math.floor(rating);
@@ -38,7 +39,12 @@ function Product({ id, title, rating, price, images, cart, setCart}) {
         title:title,
         total:price
     })
-    setCart(cartCopy)
+    let response = updateCart({userid:1, cart:cartCopy});
+    if (response) {
+      setCart(cartCopy);
+    } else {
+      // update cart to server wasn't successful
+    }
 
   }
 
