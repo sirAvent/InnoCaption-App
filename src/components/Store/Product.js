@@ -30,6 +30,7 @@ function Product({ id, title, rating, price, images }) {
       <img
         className='relative max-w-[300px] sm:max-w-[215px] sm:h-[250px] object-scale-down bg-gray-100 transform transition duration-300 hover:cursor-pointer'
         src={images[0]}
+        alt={title}
       />
       <div className='relative flex flex-col bg-white z-10 p-2 font-semibold h-[130px] justify-between'>
         <div className='mb-1'>

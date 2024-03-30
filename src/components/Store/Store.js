@@ -13,6 +13,14 @@ export default function Store() {
   const [products, setProducts] = useState([]);
   const [isProductLoaded, setProductLoad] = useState(false);
 
+  const [page, setPage] = useState(1);
+  const [inputPage, setInputPage] = useState(1);
+
+  const [maxPage, setMaxPage] = useState(0);
+
+  const limit = 15;
+
+
   useEffect(() => {
     const fetchCategories = async () => {
       try {
@@ -26,37 +34,37 @@ export default function Store() {
         console.error('Error fetching categories:', error);
       }
     };
-
     fetchCategories();
   }, []);
 
 
   useEffect(() => {
-    console.log(products); // Moved the console.log here
-  }, [products]);
-  
-  useEffect(() => {
-    const fetchProducts = async () => {
-      try {
-        const response = await fetch('https://dummyjson.com/products');
-        if (!response.ok) {
-          throw new Error('Failed to fetch items');
-        }
-        const data = await response.json();
-        setProducts(data.products);
-        setProductLoad(true);
-
-      } catch (error) {
-        console.error('Error fetching items:', error);
-      }
-    };
-
     fetchProducts();
-  }, []);
+  }, [page]);
+  
+
+  const fetchProducts = async () => {
+    try {
+      let url = `https://dummyjson.com/products?limit=${limit}&skip=${(page-1) * limit}`;
+      console.log(url);
+      const response = await fetch(url);
+      if (!response.ok) {
+        throw new Error('Failed to fetch items');
+      }
+      const data = await response.json();
+      setProducts(data.products);
+      if (maxPage === 0 || maxPage - ((page-1) * limit) > limit) {
+        setMaxPage(Math.ceil(data.total/data.limit))
+      }
+      setProductLoad(true);
+
+    } catch (error) {
+      console.error('Error fetching items:', error);
+    }
+  };
 
   const handleCategoryChange = (event) => {
     setCategory(event.target.value);
-  
   };
 
   const handleCategorySubmit = (event) => {
@@ -64,12 +72,40 @@ export default function Store() {
     console.log("Category Search submitted:", category);
   };
 
+  const handlePreviousPage = (event) => {
+    console.log("Previous Page");
+    let updatedValue = page - 1;
+    if (page > 1) {
+      setPage(updatedValue);
+      setInputPage(updatedValue);
+    }
+  };
+
+  const handleNextPage = (event) => {
+    console.log("Next Page");
+    let updatedValue = page + 1;
+    if (page < maxPage) {
+      setPage(updatedValue);
+      setInputPage(updatedValue);
+    }
+  };
+
+  const handleInputPageChange = (event) => {
+    setInputPage(event.target.value);
+  };
+
+  const handlePageSubmit = (event) => {
+    event.preventDefault();
+    if (inputPage >= 1 && inputPage <= maxPage) {
+      setPage(parseInt(inputPage));
+    }
+  };
+
   return (
     <div className="flex flex-col sm:flex-row sm:p-5  lg:px-32 lg:pr-0 sm:px-16 gap-x-8 xl:gap-x-16">
       <CategoryForm
         categories={categories}
         category={category}
-        setCategory={setCategory}
         handleCategoryChange={handleCategoryChange}
         handleCategorySubmit={handleCategorySubmit}
       />
@@ -77,17 +113,26 @@ export default function Store() {
       <div className='p-5 sm:p-0'>
         <div className='flex flex-col sm:flex-row justify-between lg:pr-32 sm:mr-20 sm:mb-5 sm:gap-y-auto gap-y-3 gap-x-20 items-center'>
           <span>
-            [] out of [] Results
+            Results for
           </span>
           <div className='flex flex-row gap-x-3 items-center sm:mb-0 mb-5'>
-            < BsCaretLeftFill className='hover:cursor-pointer' />
-            <input
-              className='h-[35px] w-[35px] outline-0 border-solid border-2 border-gray-900 rounded font-lg text-center black'
-              value='1'
-            />
-            <span>...</span>
-            <span className=''>245</span>
-            < BsCaretRightFill className='hover:cursor-pointer' />
+            < BsCaretLeftFill className='hover:cursor-pointer' onClick={handlePreviousPage} />
+            <form onSubmit={handlePageSubmit}>
+              <input
+                className='
+                h-[35px] w-[35px] outline-0 border-solid border-2 border-gray-900 rounded font-lg text-center black placeholder:text-black focus:placeholder:text-white
+                [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none
+                '
+                placeholder={page}
+                value={inputPage}
+                type='number'
+                onChange={handleInputPageChange}
+              />
+            </form>
+            
+              <span>...</span>
+              <span className=''>{maxPage}</span>
+            < BsCaretRightFill className='hover:cursor-pointer'  onClick={handleNextPage} />
           </div>
           
         </div>
