@@ -11,15 +11,33 @@ function App() {
   const [products, setProducts] = useState([]);
   const [isProductLoaded, setProductLoad] = useState(false);
 
-  const [searchQuery, setSearchQuery] = useState("");
+  const [cart, setCart] = useState([]);
 
+  const [searchQuery, setSearchQuery] = useState("");
 
   const [page, setPage] = useState(1);
   const [inputPage, setInputPage] = useState(1);
-
   const [maxPage, setMaxPage] = useState(0);
 
   const limit = 15;
+
+
+  useEffect(() => {
+    const fetchCart = async () => {
+      try {
+        const response = await fetch('https://dummyjson.com/carts/1');
+        if (!response.ok) {
+          throw new Error('Failed to fetch cart');
+        }
+        const data = await response.json();
+        setCart(data.products);
+        console.log(data.products);
+      } catch (error) {
+        console.error('Error fetching cart:', error);
+      }
+    };
+    fetchCart();
+  }, []);
 
 
   useEffect(() => {
@@ -119,6 +137,8 @@ function App() {
         setSearchQuery={setSearchQuery}
         category={category}
         setCategory={setCategory}
+        cart={cart}
+        setCart={setCart}
         handleCategoryChange={handleCategoryChange}
         setPage={setPage}
         setInputPage={setInputPage}

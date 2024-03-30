@@ -23,7 +23,7 @@ export default function Store({
 }) {
 
   return (
-    <div className="flex flex-col md:flex-row md:p-5  lg:pr-0 lg:pl-32 md:px-16 gap-x-8 xl:gap-x-16">
+    <div className="flex flex-col md:flex-row lg:pr-0 lg:pl-32 md:px-16 gap-x-8 xl:gap-x-16 pt-32">
       <CategoryForm
         categories={categories}
         category={selectedCategory}

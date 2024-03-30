@@ -1,7 +1,17 @@
-import { BsSearch, BsCart } from "react-icons/bs";
+import { BsSearch } from "react-icons/bs";
 import { useState, useEffect } from "react";
+import { Cart } from "./Cart/Cart";
 
-export default function Nav({ setSearchQuery, category, setCategory, handleCategoryChange, setPage, setInputPage }) {
+export default function Nav({
+  setSearchQuery,
+  category,
+  cart,
+  setCart,
+  setCategory,
+  handleCategoryChange,
+  setPage,
+  setInputPage
+}) {
   const [queryInput, setQueryInput] = useState("")
   const [cartStatus, setCartStatus] = useState(false); 
 
@@ -15,23 +25,14 @@ export default function Nav({ setSearchQuery, category, setCategory, handleCateg
     console.log("Search submitted:", queryInput);
   };
 
-  const handleCartClick = () => {
-    setCartStatus(!cartStatus)
-  };
-
-  useEffect(() => {
-    console.log("Cart Status:", cartStatus);
-  }, [cartStatus]);
-
-
   useEffect(()=> {
     if (category !== "") {
       setQueryInput("");
     }
   }, [category]);
   return (
-    <>
-      <nav
+    <nav className="fixed w-[100%] z-50">
+      <div
         className="
           flex flex-row justify-between gap-x-5 bg-blue-800 text-white p-5
           lg:px-32
@@ -56,12 +57,13 @@ export default function Nav({ setSearchQuery, category, setCategory, handleCateg
           </button>
         </form>
   
-        <button onClick={handleCartClick}>
-          <BsCart 
-            size={25}
-          />
-        </button>
-      </nav>
+        <Cart
+          cart={cart}
+          setCart={setCart}
+          cartStatus={cartStatus}
+          setCartStatus={setCartStatus}
+        />
+      </div>
 
       <form
         className="flex flex-row bg-gray-100 md:hidden px-4"
@@ -78,6 +80,6 @@ export default function Nav({ setSearchQuery, category, setCategory, handleCateg
           onChange={(e) => setQueryInput(e.target.value)}
         />
       </form>
-    </>
+    </nav>
   )
 }
