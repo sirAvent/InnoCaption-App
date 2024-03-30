@@ -22,33 +22,36 @@ export default function StoreView({
           {searchQuery !== '' && <>Displaying results for "{searchQuery}"</>}
         </span>
 
-        { // Removed pagination when searched by category because the category search API does not support parameters: skip, limit 
-          (category === '' && maxPage !== 0)
-          &&
-          <div className='flex flex-row gap-x-3 items-center md:mb-0 mb-5'>
-            <BsCaretLeftFill className='hover:cursor-pointer' onClick={handlePreviousPage} />
-            <form onSubmit={handlePageSubmit}>
-              <input
-                className='
-                h-[35px] w-[35px] outline-0 border-solid border-2 border-gray-900 rounded font-lg text-center black placeholder:text-black focus:placeholder:text-white
-                [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none
-                '
-                placeholder={page}
-                value={inputPage}
-                type='number'
-                onChange={handleInputPageChange}
-              />
-            </form>
-            
-              <span>...</span>
-              <span className=''>{maxPage}</span>
-            < BsCaretRightFill className='hover:cursor-pointer'  onClick={handleNextPage} />
-          </div>
-        }
+        <div className={`
+          flex flex-row gap-x-3 items-center md:mb-0 mb-5
+         ${maxPage === 0 && 'opacity-0'}
+        `}>
+          <BsCaretLeftFill className='hover:cursor-pointer' onClick={handlePreviousPage} />
+          <form onSubmit={handlePageSubmit}>
+            <input
+              className='
+              h-[35px] w-[35px] outline-0 border-solid border-2 border-gray-900 rounded font-lg text-center black placeholder:text-black focus:placeholder:text-white
+              [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none
+              '
+              placeholder={page}
+              value={inputPage}
+              type='number'
+              onChange={handleInputPageChange}
+            />
+          </form>
+          
+            <span>...</span>
+            <span className=''>{maxPage}</span>
+          < BsCaretRightFill className='hover:cursor-pointer'  onClick={handleNextPage} />
+        </div>
+
         
         
       </div>
-      <div className='flex flex-row gap-y-20 gap-x-10 flex-wrap justify-center md:justify-even lg:pr-32'>
+      <div className='
+        flex flex-row gap-y-20 gap-x-10 flex-wrap justify-center
+        md:justify-even lg:pr-32 max-w-fit w-fit
+      '>
         {isProductLoaded && products.map((product, index) => (
           <Product
             key = {index}
