@@ -1,16 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { BsCaretLeftFill, BsCaretRightFill } from "react-icons/bs";
-
-import './store.css';
 import CategoryForm from './CategoryForm';
-import Product from './Product';
 import StoreView from './StoreView';
-
-
+import './store.css';
 
 export default function Store() {
   const [categories, setCategories] = useState([]);
-  const [category, setCategory] = useState("");
+  const [selectedCategory, setSelectedCategory] = useState('');
+  const [category, setCategory] = useState('');
 
   const [products, setProducts] = useState([]);
   const [isProductLoaded, setProductLoad] = useState(false);
@@ -42,12 +38,15 @@ export default function Store() {
 
   useEffect(() => {
     fetchProducts();
-  }, [page]);
+  }, [page, category]);
   
 
   const fetchProducts = async () => {
     try {
       let url = `https://dummyjson.com/products?limit=${limit}&skip=${(page-1) * limit}`;
+      if (category != '') {
+        url = `https://dummyjson.com/products/category/${category}`;
+      }
       console.log(url);
       const response = await fetch(url);
       if (!response.ok) {
@@ -66,18 +65,19 @@ export default function Store() {
   };
 
   const handleCategoryChange = (event) => {
-    setCategory(event.target.value);
+    setSelectedCategory(event.target.value);
   };
 
   const handleCategorySubmit = (event) => {
     event.preventDefault();
-    console.log("Category Search submitted:", category);
+    setCategory(selectedCategory);
   };
 
   const handlePreviousPage = (event) => {
     console.log("Previous Page");
     let updatedValue = page - 1;
     if (page > 1) {
+      setCategory('');
       setPage(updatedValue);
       setInputPage(updatedValue);
     }
@@ -87,6 +87,7 @@ export default function Store() {
     console.log("Next Page");
     let updatedValue = page + 1;
     if (page < maxPage) {
+      setCategory('');
       setPage(updatedValue);
       setInputPage(updatedValue);
     }
@@ -104,15 +105,17 @@ export default function Store() {
   };
 
   return (
-    <div className="flex flex-col sm:flex-row sm:p-5  lg:px-32 lg:pr-0 sm:px-16 gap-x-8 xl:gap-x-16">
+    <div className="flex flex-col sm:flex-row sm:p-5  lg:pr-0 lg:pl-32 sm:px-16 gap-x-8 xl:gap-x-16">
       <CategoryForm
         categories={categories}
-        category={category}
+        category={selectedCategory}
         handleCategoryChange={handleCategoryChange}
         handleCategorySubmit={handleCategorySubmit}
+        setCategory={setCategory}
       />
 
       <StoreView
+        category={category}
         products={products}
         isProductLoaded={isProductLoaded}
         page={page}

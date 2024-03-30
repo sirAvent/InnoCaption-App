@@ -2,6 +2,7 @@ import { BsCaretLeftFill, BsCaretRightFill } from "react-icons/bs";
 import Product from './Product';
 
 export default function StoreView({
+  category,
   products,
   isProductLoaded,
   page,
@@ -11,15 +12,19 @@ export default function StoreView({
   handleNextPage,
   handlePageSubmit,
   handleInputPageChange
-}) {
+}){
   return (
     <div className='p-5 sm:p-0'>
-      <div className='flex flex-col sm:flex-row justify-between lg:pr-32 sm:mr-20 sm:mb-5 sm:gap-y-auto gap-y-3 gap-x-20 items-center'>
+      <div className='flex flex-col sm:flex-row justify-between lg:pr-32 sm:mb-5 sm:gap-y-auto gap-y-3 gap-x-20 items-center'>
         <span>
-          Results for
+          {category !== '' && <>Results for {category}</>}
         </span>
-        <div className='flex flex-row gap-x-3 items-center sm:mb-0 mb-5'>
-          < BsCaretLeftFill className='hover:cursor-pointer' onClick={handlePreviousPage} />
+
+        { // Removed pagination when searched by category because the category search API does not support parameters: skip, limit 
+          (category === '')
+          &&
+          <div className='flex flex-row gap-x-3 items-center sm:mb-0 mb-5'>
+          <BsCaretLeftFill className='hover:cursor-pointer' onClick={handlePreviousPage} />
           <form onSubmit={handlePageSubmit}>
             <input
               className='
@@ -37,6 +42,8 @@ export default function StoreView({
             <span className=''>{maxPage}</span>
           < BsCaretRightFill className='hover:cursor-pointer'  onClick={handleNextPage} />
         </div>
+        }
+        
         
       </div>
       <div className='flex flex-row gap-y-20 sm:gap-10 flex-wrap justify-center sm:justify-even lg:pr-32'>

@@ -1,6 +1,9 @@
 import React from 'react';
 
-function CategoryForm({ categories, category, handleCategoryChange, handleCategorySubmit }) {
+function CategoryForm({ categories, category, handleCategoryChange, handleCategorySubmit, setCategory }) {
+  const handleResetCategory = () => {
+    setCategory('');
+  }
   return (
     <form onSubmit={handleCategorySubmit} className='pt-5 pl-5 sm:p-5 sm:pt-2 border-solid sm:border-2 border-gray-200 rounded-md h-fit'>
       <h1 className='text-blue-900 font-semibold'>Search by Category</h1>
@@ -35,10 +38,11 @@ function CategoryForm({ categories, category, handleCategoryChange, handleCatego
           font-semibold border-r-0 rounded-tr-none rounded-br-none
           bg-gray-300
           '
+          onClick={handleResetCategory}
         >
           Reset
         </span>
-        <span
+        <button
           className='
           hover:cursor-pointer 
           p-1 px-2
@@ -48,7 +52,7 @@ function CategoryForm({ categories, category, handleCategoryChange, handleCatego
           '
         >
           Submit
-        </span>
+        </button>
       </div>
     </form>
   );
