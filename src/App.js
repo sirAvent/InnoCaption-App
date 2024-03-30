@@ -42,7 +42,6 @@ function App() {
   useEffect(() => {
     fetchProducts();
   }, [page, category, searchQuery]);
-  
 
   const fetchProducts = async () => {
     try {
@@ -121,6 +120,8 @@ function App() {
         category={category}
         setCategory={setCategory}
         handleCategoryChange={handleCategoryChange}
+        setPage={setPage}
+        setInputPage={setInputPage}
       />
 
       <Store

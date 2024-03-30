@@ -1,7 +1,7 @@
 import { BsSearch, BsCart } from "react-icons/bs";
 import { useState, useEffect } from "react";
 
-export default function Nav({ setSearchQuery, category, setCategory, handleCategoryChange }) {
+export default function Nav({ setSearchQuery, category, setCategory, handleCategoryChange, setPage, setInputPage }) {
   const [queryInput, setQueryInput] = useState("")
   const [cartStatus, setCartStatus] = useState(false); 
 
@@ -9,6 +9,8 @@ export default function Nav({ setSearchQuery, category, setCategory, handleCateg
     event.preventDefault();
     setSearchQuery(queryInput);
     setCategory('');
+    setPage(1);
+    setInputPage(1);
     handleCategoryChange({ target: { value: '' } });
     console.log("Search submitted:", queryInput);
   };
