@@ -1,7 +1,6 @@
 // Update the cart to server, return true when success
 // false when not successfull
 export async function updateCart({ userid, array }) {
-  console.log(userid)
   try {
     const response = await fetch(`https://dummyjson.com/carts/${userid}`, {
       method: 'PUT',
