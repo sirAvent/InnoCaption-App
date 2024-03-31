@@ -71,7 +71,6 @@ function App() {
   };
 
   const handlePreviousPage = () => {
-    console.log("Previous Page");
     let updatedValue = page - 1;
     if (page > 1) {
       setCategory('');
@@ -81,7 +80,6 @@ function App() {
   };
 
   const handleNextPage = () => {
-    console.log("Next Page");
     let updatedValue = page + 1;
     if (page < maxPage) {
       setCategory('');
