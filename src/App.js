@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import './App.css';
 import Nav from "./components/Nav";
 import Store from "./components/Store/Store";
+import Toast from './components/Toast/Toast';
 import { getCategories } from './services/getCategories';
 import { getProducts } from './services/getProducts';
 import { getCart } from './services/getCart';
@@ -21,6 +22,9 @@ function App() {
   const [page, setPage] = useState(1);
   const [inputPage, setInputPage] = useState(1);
   const [maxPage, setMaxPage] = useState(0);
+
+  const [toast, setToast] = useState(false);
+  const [toastStatus, setToastStatus] = useState(false);
 
   const limit = 15;
 
@@ -95,6 +99,18 @@ function App() {
     }
   };
 
+  const handleToast = (input, isSuccess) => {
+    setToastStatus(isSuccess);
+    if (toast && input) {
+      setToast(false);
+      setTimeout(() => {
+        setToast(true);
+      }, 0)
+    } else {
+      setToast(input);
+    }
+  }
+
   return (
     <>
       <Nav
@@ -103,6 +119,7 @@ function App() {
         setCategory={setCategory}
         cart={cart}
         setCart={setCart}
+        handleToast={handleToast}
         handleCategoryChange={handleCategoryChange}
         setPage={setPage}
         setInputPage={setInputPage}
@@ -118,6 +135,7 @@ function App() {
         page={page}
         inputPage={inputPage}
         maxPage={maxPage}
+        handleToast={handleToast}
         searchQuery={searchQuery}
         setCategory={setCategory}
         setCart={setCart}
@@ -128,6 +146,16 @@ function App() {
         handleInputPageChange={handleInputPageChange}
         handlePageSubmit={handlePageSubmit}
       />
+
+      {
+        toast &&
+        <Toast
+          status={toast}
+          setStatus={setToastStatus}
+          isSuccess={toastStatus}
+        />
+      }
+      
     </>
   );
 }

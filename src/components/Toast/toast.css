@@ -1,0 +1,16 @@
+@keyframes fadeOutUp {
+  0% {
+    opacity: 1;
+    transform: translate(-50%, 0px);
+  }
+  100% {
+    opacity: 0;
+    transform: translate(-50%,-10px);
+  }
+}
+
+.fade-out-up {
+  animation-name: fadeOutUp;
+  animation-duration: 4s; 
+  animation-timing-function: ease-in-out forwards; 
+}

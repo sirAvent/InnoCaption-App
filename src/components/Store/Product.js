@@ -25,7 +25,7 @@ const RatingStars = ({ rating }) => {
   );
 };
 
-function Product({ id, title, rating, price, images, cart, setCart}) {
+function Product({ id, title, rating, price, images, cart, setCart, handleToast}) {
 
   const addToCart = (id, title, price, thumbnail) => {
     const cartCopy = [...cart];
@@ -44,16 +44,15 @@ function Product({ id, title, rating, price, images, cart, setCart}) {
       response => {
         if (response) {
           setCart(cartCopy);
+          handleToast(true, true);
         } else {
           // update cart to server wasn't successful
+          handleToast(true, false);
         }
       }
     );
     
 
-  }
-
-  const removeFromCart = (id) => {
   }
 
   const inCart = (id) => {

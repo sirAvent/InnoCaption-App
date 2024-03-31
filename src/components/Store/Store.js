@@ -12,6 +12,7 @@ export default function Store({
   page,
   inputPage,
   maxPage,
+  handleToast,
   searchQuery,
   setCategory,
   setCart,
@@ -42,6 +43,7 @@ export default function Store({
         page={page}
         inputPage={inputPage}
         maxPage={maxPage}
+        handleToast={handleToast}
         searchQuery={searchQuery}
         handlePreviousPage={handlePreviousPage}
         handleNextPage={handleNextPage}

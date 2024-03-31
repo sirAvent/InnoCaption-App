@@ -11,6 +11,7 @@ export default function StoreView({
   inputPage,
   maxPage,
   searchQuery,
+  handleToast,
   handlePreviousPage,
   handleNextPage,
   handlePageSubmit,
@@ -64,6 +65,7 @@ export default function StoreView({
             images={product.images}
             cart={cart}
             setCart={setCart}
+            handleToast={handleToast}
           />
         ))}
       </div>

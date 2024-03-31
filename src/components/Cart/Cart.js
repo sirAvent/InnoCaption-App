@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { BsCart, BsXLg } from "react-icons/bs";
 import { CartMenu } from "./CartMenu";
 
-export function Cart({ cart, setCart, cartStatus, setCartStatus}){
+export function Cart({ cart, setCart, cartStatus, setCartStatus, handleToast}){
   useEffect(() => {
     console.log("Cart Status:", cartStatus);
     if (cartStatus) {
@@ -51,7 +51,7 @@ export function Cart({ cart, setCart, cartStatus, setCartStatus}){
         cart={cart}
         setCart={setCart}
         cartStatus={cartStatus}
-        setCartStatus={setCartStatus}
+        handleToast={handleToast}
       />
     </>
   )

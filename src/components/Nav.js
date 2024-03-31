@@ -8,6 +8,7 @@ export default function Nav({
   cart,
   setCart,
   setCategory,
+  handleToast,
   handleCategoryChange,
   setPage,
   setInputPage
@@ -63,6 +64,7 @@ export default function Nav({
           setCart={setCart}
           cartStatus={cartStatus}
           setCartStatus={setCartStatus}
+          handleToast={handleToast}
         />
       </div>
 

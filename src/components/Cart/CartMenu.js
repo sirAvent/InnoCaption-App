@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { CartItem } from "./CartItem"
 import { updateCart } from "../../services/updateCart";
 
-export function CartMenu({ cart, setCart, cartStatus, setCartStatus }){
+export function CartMenu({ cart, setCart, cartStatus, handleToast }){
   const [totalCost, setTotalCost] = useState(0);
 
   useEffect(() => {
@@ -16,27 +16,34 @@ export function CartMenu({ cart, setCart, cartStatus, setCartStatus }){
     const foundIndex = cart.findIndex(item => item.id === id)
     console.log(foundIndex);
     if (foundIndex !== -1) {
+      // Item is in cart
       // Create a copy of cart and set it to trigger component update
       const cartCopy = [...cart];
       if (cartCopy[foundIndex].quantity <= 1) {
         // Remove the product from cart if quantity is 1
         const updatedCart = cartCopy.filter(item => item.id !== id);
-        let response = updateCart({userid:1, cart:updatedCart});
-        if (response) {
-          setCart(updatedCart);
-        } else {
-          // update cart to server wasn't successful
-        }
+        updateCart({userid:1, cart:updatedCart}).then(
+          response => {
+            if (response) {
+              setCart(updatedCart);
+              handleToast(true, true);
+            } else {
+              // update cart to server wasn't successful
+              handleToast(true, false);
+            }
+          }
+        ); 
       } else {
-        // Item is in cart
         updateCart({userid:1, cart:cartCopy}).then(
           response => {
             if (response) {
               cartCopy[foundIndex].quantity--;
               cartCopy[foundIndex].total -= cartCopy[foundIndex].price;
               setCart(cartCopy);
+              handleToast(true, true);
             } else {
               // update cart to server wasn't successful
+              handleToast(true, false);
             }
           }
         );
@@ -58,8 +65,11 @@ export function CartMenu({ cart, setCart, cartStatus, setCartStatus }){
         response => {
           if (response) {
             setCart(cartCopy)
+            handleToast(true, true);
           } else {
             // update cart to server wasn't successful
+            handleToast(true, false);
+
           }
           
         }
@@ -88,7 +98,7 @@ export function CartMenu({ cart, setCart, cartStatus, setCartStatus }){
         mt-[68px] w-[100vw]
         z-20 transform translate-x-[100%]
         duration-300 grid overflow-auto
-        ${cartStatus && 'transform translate-x-0'}
+        ${cartStatus && 'transform translate-x-[0%]'}
         
       `}>
         
