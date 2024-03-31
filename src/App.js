@@ -47,13 +47,16 @@ function App() {
   useEffect(() => {
     getProducts({category:category, query:searchQuery, limit:limit, page:page}).then(
       data => {
-        setProducts(data.products);
-        if (data.total <= limit || data.total === 0) {
-          setMaxPage(0);
-        } else if (maxPage === 0 || maxPage - ((page-1) * limit) > limit) {
-          setMaxPage(Math.ceil(data.total/data.limit))
+        if (data !== undefined) {
+          setProducts(data.products);
+          if (data.total <= limit || data.total === 0) {
+            setMaxPage(0);
+          } else if (maxPage === 0 || maxPage - ((page-1) * limit) > limit) {
+            setMaxPage(Math.ceil(data.total/data.limit))
+          }
+          setProductLoad(true);
         }
-        setProductLoad(true);
+        
       }
     );
   }, [page, category, searchQuery]);

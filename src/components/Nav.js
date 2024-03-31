@@ -23,7 +23,6 @@ export default function Nav({
     setPage(1);
     setInputPage(1);
     handleCategoryChange({ target: { value: '' } });
-    console.log("Search submitted:", queryInput);
   };
 
   useEffect(()=> {
