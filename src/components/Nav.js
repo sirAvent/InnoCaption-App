@@ -53,9 +53,9 @@ export default function Nav({
             value={queryInput}
             onChange={(e) => setQueryInput(e.target.value)}
           />
-          <button>
+          <span>
             <BsSearch size={20} color="darkgray"/>
-          </button>
+          </span>
         </form>
   
         <Cart
@@ -71,9 +71,9 @@ export default function Nav({
         className="flex flex-row bg-gray-100 md:hidden px-4"
         onSubmit={handleSearchSubmit}
       >
-        <button className="self-center px-3">
+        <span className="self-center px-3">
           <BsSearch size={20} color="darkgray"/>
-        </button>
+        </span>
         <input
           className="py-4 bg-transparent w-[100%] outline-0"
           type="text"
