@@ -59,11 +59,11 @@ export function CartMenu({ cart, setCart, cartStatus, handleToast }){
     if (foundIndex !== -1) {
       // Create a copy of cart and set it to trigger component update
       const cartCopy = [...cart];
-      cartCopy[foundIndex].quantity++;
-      cartCopy[foundIndex].total += cartCopy[foundIndex].price;
       updateCart({userid:1, cart:cartCopy}).then(
         response => {
           if (response) {
+            cartCopy[foundIndex].quantity++;
+            cartCopy[foundIndex].total += cartCopy[foundIndex].price;
             setCart(cartCopy)
             handleToast(true, true);
           } else {
