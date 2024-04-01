@@ -96,9 +96,9 @@ export function CartMenu({ cart, setCart, cartStatus, handleToast }){
         fixed bg-blue-800 right-0 top-0 bottom-0
         md:mt-[88px] md:w-[45vw] md:max-w-[calc(500px+30px)]
         mt-[68px] w-[100vw]
-        z-20 transform translate-x-[100%]
+        z-20 transform 
         duration-300 grid overflow-auto
-        ${cartStatus && 'transform translate-x-[0]'}
+        ${cartStatus ? 'transform translate-x-[0]' : 'translate-x-[100%]'}
         
       `}>
         
